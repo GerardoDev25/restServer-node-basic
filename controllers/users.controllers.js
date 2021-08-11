@@ -1,14 +1,17 @@
-const { response } = require("express");
+const { response, request } = require("express");
 
 // ? 0GET
-const userGet = (req, res = response) => {
-   res.json({
+const userGet = (req = request, res = response) => {
+   const query = req.query;
+
+   req.res.json({
       msg: "get API - contralador",
+      query
    });
 };
 
 // ? POST
-const userPost = (req, res = response) => {
+const userPost = (req = request, res = response) => {
    const { name, age } = req.body;
 
    res.json({
@@ -19,21 +22,24 @@ const userPost = (req, res = response) => {
 };
 
 // ? PUT
-const userPut = (req, res = response) => {
+const userPut = (req = request, res = response) => {
+   const { id } = req.params;
+
    res.status(400).json({
       msg: "put API - contralador",
+      id,
    });
 };
 
 // ? DELETE
-const userDelete = (req, res = response) => {
+const userDelete = (req = request, res = response) => {
    res.json({
       msg: "delete API - contralador",
    });
 };
 
 // ? PATCH
-const userPatch = (req, res = response) => {
+const userPatch = (req = request, res = response) => {
    res.json({
       msg: "patch API - contralador",
    });
