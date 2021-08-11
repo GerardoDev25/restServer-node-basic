@@ -9,8 +9,12 @@ const userGet = (req, res = response) => {
 
 // ? POST
 const userPost = (req, res = response) => {
-   res.status(201).json({
+   const { name, age } = req.body;
+
+   res.json({
       msg: "post API - contralador",
+      name,
+      age,
    });
 };
 

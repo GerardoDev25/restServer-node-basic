@@ -6,7 +6,7 @@ class Server {
       this.port = process.env.PORT;
       this.app = express();
       this.userPath = "/api/users";
-      
+
       // * middlewares
       this.middlewares();
 
@@ -19,6 +19,9 @@ class Server {
       // * cors
       this.app.use(cors());
 
+      // * read and body parse
+      this.app.use(express.json());
+
       // * public directory
       this.app.use(express.static("public"));
    }
@@ -26,7 +29,7 @@ class Server {
    // ? function that handle the routes of the app
    routes() {
       this.app.use(
-        this.userPath,
+         this.userPath,
          require("../routes/users.routes.js")
       );
    }
