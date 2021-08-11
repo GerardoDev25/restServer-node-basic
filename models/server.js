@@ -2,8 +2,8 @@ const express = require("express");
 
 class Server {
    constructor() {
-      this.app = express();
       this.port = process.env.PORT;
+      this.app = express();
 
       // * middlewares
       this.middlewares();
@@ -20,8 +20,32 @@ class Server {
 
    // ? function that handle the routes of the app
    routes() {
+      // * GET
       this.app.get("/api", (req, res) => {
-         res.send("hola mundo");
+         res.json({
+            msg: "get API",
+         });
+      });
+
+      // * POST
+      this.app.post("/api", (req, res) => {
+         res.json({
+            msg: "post API",
+         });
+      });
+
+      // * PUT
+      this.app.put("/api", (req, res) => {
+         res.json({
+            msg: "put API",
+         });
+      });
+
+      // * DELETE
+      this.app.delete("/api", (req, res) => {
+         res.json({
+            msg: "delete API",
+         });
       });
    }
 
