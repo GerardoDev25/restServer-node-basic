@@ -17,10 +17,10 @@ const {
 
 const router = Router();
 
-// ? routes
-
+// ? GET
 router.get("/", userGet);
 
+// ? POST
 router.post(
    "/",
    [
@@ -40,10 +40,13 @@ router.post(
    userPost
 );
 
+// ? PUT
 router.put("/:id", userPut);
 
+// ? DELETE
 router.delete("/", userDelete);
 
+// ? PATCH
 router.patch("/", userPatch);
 
 module.exports = router;
