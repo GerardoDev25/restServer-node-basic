@@ -15,6 +15,8 @@ const userGet = (req = request, res = response) => {
 
 // ? POST
 const userPost = async (req = request, res = response) => {
+   
+
    const { name, email, password, role } = req.body;
 
    const user = new UserModel({ name, email, password, role });
