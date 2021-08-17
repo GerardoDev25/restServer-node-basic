@@ -15,8 +15,6 @@ const userGet = (req = request, res = response) => {
 
 // ? POST
 const userPost = async (req = request, res = response) => {
-   
-
    const { name, email, password, role } = req.body;
 
    const user = new UserModel({ name, email, password, role });
@@ -32,6 +30,8 @@ const userPost = async (req = request, res = response) => {
    // * encode the password
    const salt = bcryptjs.genSaltSync();
    user.password = bcryptjs.hashSync(password, salt);
+
+   // * save the user to data base
    await user.save();
 
    res.json({
