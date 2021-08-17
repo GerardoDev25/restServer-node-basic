@@ -35,7 +35,7 @@ const userPost = async (req = request, res = response) => {
 // ? PUT
 const userPut = async (req = request, res = response) => {
    const { id } = req.params;
-   const { password, google, email, ...resto } = req.body;
+   const { _id, password, google, email, ...resto } = req.body;
 
    // todo valida db
 

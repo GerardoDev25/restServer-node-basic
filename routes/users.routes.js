@@ -8,6 +8,7 @@ const {
 const {
    isValidRole,
    existEmail,
+   existUserId,
 } = require("../helpers/dbValidators.js");
 
 // * controllers
@@ -42,7 +43,16 @@ router.post(
 );
 
 // ? PUT
-router.put("/:id", userPut);
+router.put(
+   "/:id",
+   [
+      check("id", "isn't valid id").isMongoId(),
+      check("id").custom(existUserId),
+      check("role").custom(isValidRole),
+      ValidataInputs,
+   ],
+   userPut
+);
 
 // ? DELETE
 router.delete("/", userDelete);
