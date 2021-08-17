@@ -5,7 +5,10 @@ const { check } = require("express-validator");
 const {
    ValidataInputs,
 } = require("../middlewares/validate-inputs.js");
-const { isValidRole } = require("../helpers/dbValidators.js");
+const {
+   isValidRole,
+   existEmail,
+} = require("../helpers/dbValidators.js");
 
 // * controllers
 const {
@@ -27,6 +30,7 @@ router.post(
    [
       check("name", "the name is required").not().isEmpty(),
       check("email", "the email isn't valid").isEmail(),
+      check("email").custom(existEmail),
       check("role").custom(isValidRole),
       check(
          "password",

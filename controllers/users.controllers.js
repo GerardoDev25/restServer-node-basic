@@ -19,14 +19,6 @@ const userPost = async (req = request, res = response) => {
 
    const user = new UserModel({ name, email, password, role });
 
-   // * check if exist the email
-   const exitEmail = await UserModel.findOne({ email });
-   if (exitEmail) {
-      return res.status(400).json({
-         msg: "that email exist in the data base",
-      });
-   }
-
    // * encode the password
    const salt = bcryptjs.genSaltSync();
    user.password = bcryptjs.hashSync(password, salt);
