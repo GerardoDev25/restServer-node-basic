@@ -33,12 +33,23 @@ const userPost = async (req = request, res = response) => {
 };
 
 // ? PUT
-const userPut = (req = request, res = response) => {
+const userPut = async (req = request, res = response) => {
    const { id } = req.params;
+   const { password, google, email, ...resto } = req.body;
+
+   // todo valida db
+
+   if (password) {
+      // * encode the password
+      const salt = bcryptjs.genSaltSync();
+      resto.password = bcryptjs.hashSync(password, salt);
+   }
+
+   const userDB = await UserModel.findByIdAndUpdate(id, resto);
 
    res.status(400).json({
       msg: "put API - contralador",
-      id,
+      userDB,
    });
 };
 
