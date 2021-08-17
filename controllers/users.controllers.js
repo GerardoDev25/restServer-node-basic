@@ -5,13 +5,20 @@ const UserModel = require("../models/user");
 
 // ? 0GET
 const userGet = async (req = request, res = response) => {
+   // 
+   // * get the paramas for the pagination
    const { limit = 5, from = 0 } = req.query;
+   const query = { state: true };
 
-   const users = await UserModel.find()
-      .skip(Number(from))
-      .limit(Number(limit));
+   // * get users with pagination
+   const [total, users] = await Promise.all([
+      UserModel.countDocuments(query),
+      UserModel.find(query)
+         .skip(Number(from))
+         .limit(Number(limit)),
+   ]);
 
-   req.res.json({ users });
+   req.res.json({ total, users });
 };
 
 // ? POST
