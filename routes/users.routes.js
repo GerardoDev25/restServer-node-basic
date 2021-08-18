@@ -6,6 +6,11 @@ const {
    ValidataInputs,
 } = require("../middlewares/validate-inputs.js");
 const {
+   validateJWT,
+} = require("../middlewares/validate-jwt.js");
+
+// * helpers
+const {
    isValidRole,
    existEmail,
    existUserId,
@@ -60,6 +65,7 @@ router.put(
 router.delete(
    "/:id",
    [
+      validateJWT,
       check("id", "isn't valid id").isMongoId(),
       check("id").custom(existUserId),
       ValidataInputs,

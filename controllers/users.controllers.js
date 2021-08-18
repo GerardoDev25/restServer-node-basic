@@ -61,9 +61,11 @@ const userPut = async (req = request, res = response) => {
 // ? DELETE
 const userDelete = async (req = request, res = response) => {
    const { id } = req.params;
+   const { uid } = req;
 
    // const user = await UserModel.findByIdAndDelete(id);
 
+   // * change the status to false
    const user = await UserModel.findByIdAndUpdate(id, {
       state: false,
    });
