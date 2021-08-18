@@ -5,7 +5,7 @@ const UserModel = require("../models/user");
 
 // ? 0GET
 const userGet = async (req = request, res = response) => {
-   // 
+   //
    // * get the paramas for the pagination
    const { limit = 5, from = 0 } = req.query;
    const query = { state: true };
@@ -55,13 +55,21 @@ const userPut = async (req = request, res = response) => {
 
    const userDB = await UserModel.findByIdAndUpdate(id, resto);
 
-   res.status(400).json(userDB);
+   res.status(200).json(userDB);
 };
 
 // ? DELETE
-const userDelete = (req = request, res = response) => {
+const userDelete = async (req = request, res = response) => {
+   const { id } = req.params;
+
+   // const user = await UserModel.findByIdAndDelete(id);
+
+   const user = await UserModel.findByIdAndUpdate(id, {
+      state: false,
+   });
+
    res.json({
-      msg: "delete API - contralador",
+      user,
    });
 };
 
