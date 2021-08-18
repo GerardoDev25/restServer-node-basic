@@ -70,6 +70,7 @@ const userDelete = async (req = request, res = response) => {
       state: false,
    });
 
+   // * send user changed
    res.json({
       user,
    });
