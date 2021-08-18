@@ -1,7 +1,13 @@
 const { response, request } = require("express");
 const bcryptjs = require("bcryptjs");
 
+// * models
 const UserModel = require("../models/user");
+
+// * helpers
+const { generateJWT } = require("../helpers/generateJWT");
+
+// ! -----------------------------------------------------
 
 const login = async (req = request, res = response) => {
    const { email, password } = req.body;
@@ -10,11 +16,9 @@ const login = async (req = request, res = response) => {
       // * veriry if the eamil exist
       const user = await UserModel.findOne({ email });
       if (!user) {
-         return res
-            .status(400)
-            .json({
-               msg: "user or password isn't correct ¿ email",
-            });
+         return res.status(400).json({
+            msg: "user or password isn't correct ¿ email",
+         });
       }
 
       // * veriry if the user is active
@@ -30,18 +34,16 @@ const login = async (req = request, res = response) => {
          user.password
       );
       if (!validPassword) {
-         return res
-            .status(400)
-            .json({
-               msg: "user or password isn't correct ¿ password",
-            });
+         return res.status(400).json({
+            msg: "user or password isn't correct ¿ password",
+         });
       }
 
-      // * generate jwt
+      // * generate and send token
+      const token = await generateJWT(user.id);
+      res.json({ user, token });
 
-      res.json({
-         mshg: "login ok",
-      });
+      //
    } catch (error) {
       console.error(error);
       res.status(500).json({
