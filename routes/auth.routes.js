@@ -9,7 +9,7 @@ const {
 // * controllers
 const { login } = require("../controllers/auth.controller");
 
-// ! -----------------------------------------------------
+// ! ----------------------------------------------------
 
 const router = Router();
 
