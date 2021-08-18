@@ -34,8 +34,8 @@ const UserSchema = Schema({
 
 // ? rewrite a functin to remove password and version
 UserSchema.methods.toJSON = function () {
-   const { __v, password, ...users } = this.toObject();
-   return users;
+   const { __v, password, _id, ...users } = this.toObject();
+   return { ...users, uid: _id };
 };
 
 module.exports = model("User", UserSchema);
