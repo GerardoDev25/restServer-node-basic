@@ -80,6 +80,7 @@ const userPatch = (req = request, res = response) => {
    });
 };
 
+// export
 module.exports = {
    userGet,
    userPost,
