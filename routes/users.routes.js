@@ -4,10 +4,10 @@ const { check } = require("express-validator");
 // * middlewares
 const {
    ValidataInputs,
-} = require("../middlewares/validate-inputs.js");
-const {
    validateJWT,
-} = require("../middlewares/validate-jwt.js");
+   isAdminRole,
+   haveRole,
+} = require("../middlewares");
 
 // * helpers
 const {
@@ -24,10 +24,6 @@ const {
    userDelete,
    userPatch,
 } = require("../controllers/users.controllers.js");
-const {
-   isAdminRole,
-   haveRole,
-} = require("../middlewares/validate-roles.js");
 
 // ! -----------------------------------------------------
 
