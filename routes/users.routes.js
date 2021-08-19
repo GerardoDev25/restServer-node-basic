@@ -4,10 +4,10 @@ const { check } = require("express-validator");
 // * middlewares
 const {
    ValidataInputs,
-} = require("../middlewares/validate-inputs.js");
-const {
    validateJWT,
-} = require("../middlewares/validate-jwt.js");
+   isAdminRole,
+   haveRole,
+} = require("../middlewares");
 
 // * helpers
 const {
@@ -66,6 +66,8 @@ router.delete(
    "/:id",
    [
       validateJWT,
+      // isAdminRole,
+      haveRole("ADMIN_ROLE", "SELL_ROLE"),
       check("id", "isn't valid id").isMongoId(),
       check("id").custom(existUserId),
       ValidataInputs,
