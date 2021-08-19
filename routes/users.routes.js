@@ -26,6 +26,7 @@ const {
 } = require("../controllers/users.controllers.js");
 const {
    isAdminRole,
+   haveRole,
 } = require("../middlewares/validate-roles.js");
 
 // ! -----------------------------------------------------
@@ -69,7 +70,8 @@ router.delete(
    "/:id",
    [
       validateJWT,
-      isAdminRole,
+      // isAdminRole,
+      haveRole("ADMIN_ROLE", "SELL_ROLE"),
       check("id", "isn't valid id").isMongoId(),
       check("id").custom(existUserId),
       ValidataInputs,
