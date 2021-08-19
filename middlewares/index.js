@@ -1,7 +1,6 @@
-const ValidataInputs = require("../middlewares/validate-inputs.js");
-
+// ? export all function the middleware
 const validateJWT = require("../middlewares/validate-jwt.js");
-
+const ValidataInputs = require("../middlewares/validate-inputs.js");
 const validateRoles = require("../middlewares/validate-roles.js");
 
 module.exports = {
