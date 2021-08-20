@@ -59,11 +59,42 @@ const gogleSignIn = async (req = request, res = response) => {
    const { id_token } = req.body;
 
    try {
-      const googleUser = await googleVerify(id_token);
-      console.log(googleUser);
+      const { email, name, image } = await googleVerify(
+         id_token
+      );
 
-      res.json({ msg: "all ok google sign in", googleUser });
+      // * get user
+      let user = await UserModel.findOne({ email });
+
+      // * if no exist the user create one
+      if (!user) {
+         const data = {
+            name,
+            email,
+            password: "no_importa",
+            image,
+            // role: "USER_ROLE",
+            google: true,
+         };
+
+         // * save the new user in to data base
+         user = new UserModel(data);
+         await user.save();
+      }
+
+      // * if user db isn't active 
+      if (!user.state) {
+         return res
+            .status(401)
+            .json({ msg: "talk to the admin - user locked" });
+      }
+
+      // * generate jwt
+      const token = await generateJWT(user.id);
+
+      res.json({ user, token });
    } catch (error) {
+      console.log(error);
       res.status(400).json({
          msg: "google token isn't valid",
       });
