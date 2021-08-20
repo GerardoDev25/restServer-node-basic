@@ -9,6 +9,7 @@ const { generateJWT } = require("../helpers/generateJWT");
 
 // ! -----------------------------------------------------
 
+// ? funtion that make login 
 const login = async (req = request, res = response) => {
    const { email, password } = req.body;
 
@@ -52,4 +53,11 @@ const login = async (req = request, res = response) => {
    }
 };
 
-module.exports = { login };
+// ? funtion that make login with google
+const gogleSignIn = (req = request, res = response) => {
+   const { id_token } = req.body;
+
+   res.json({ msg: "all ok google sign in", id_token });
+};
+
+module.exports = { login, gogleSignIn };
