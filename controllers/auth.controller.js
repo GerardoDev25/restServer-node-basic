@@ -73,7 +73,6 @@ const gogleSignIn = async (req = request, res = response) => {
             email,
             password: "no_importa",
             image,
-            // role: "USER_ROLE",
             google: true,
          };
 
