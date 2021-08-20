@@ -7,7 +7,10 @@ const {
 } = require("../middlewares/validate-inputs");
 
 // * controllers
-const { login } = require("../controllers/auth.controller");
+const {
+   login,
+   gogleSignIn,
+} = require("../controllers/auth.controller");
 
 // ! ----------------------------------------------------
 
@@ -24,6 +27,18 @@ router.post(
       ValidataInputs,
    ],
    login
+);
+
+// ? POST GOOGLE
+router.post(
+   "/google",
+   [
+      check("id_token", "the id_token is required")
+         .not()
+         .isEmpty(),
+      ValidataInputs,
+   ],
+   gogleSignIn
 );
 
 module.exports = router;
