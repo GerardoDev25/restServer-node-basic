@@ -6,10 +6,11 @@ const UserModel = require("../models/user");
 
 // * helpers
 const { generateJWT } = require("../helpers/generateJWT");
+const { googleVerify } = require("../helpers/google-verify");
 
 // ! -----------------------------------------------------
 
-// ? funtion that make login 
+// ? funtion that make login
 const login = async (req = request, res = response) => {
    const { email, password } = req.body;
 
@@ -54,10 +55,19 @@ const login = async (req = request, res = response) => {
 };
 
 // ? funtion that make login with google
-const gogleSignIn = (req = request, res = response) => {
+const gogleSignIn = async (req = request, res = response) => {
    const { id_token } = req.body;
 
-   res.json({ msg: "all ok google sign in", id_token });
+   try {
+      const googleUser = await googleVerify(id_token);
+      console.log(googleUser);
+
+      res.json({ msg: "all ok google sign in", googleUser });
+   } catch (error) {
+      res.status(400).json({
+         msg: "google token isn't valid",
+      });
+   }
 };
 
 module.exports = { login, gogleSignIn };
