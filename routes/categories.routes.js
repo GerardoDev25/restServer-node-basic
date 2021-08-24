@@ -1,10 +1,14 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 
+// * controllers
+const { createCategory } = require("../controllers/categories");
+
 // * middleware
 const {
+   validateJWT,
    ValidataInputs,
-} = require("../middlewares/validate-inputs");
+} = require("../middlewares");
 
 // ! ----------------------------------------------------
 
@@ -21,9 +25,16 @@ router.get("/:id", (req, res) => {
 });
 
 // ? POST create a category - private with token
-router.post("/", (req, res) => {
-   res.json("post");
-});
+router.post(
+   "/",
+   [
+      validateJWT,
+      check("name", "the name is required").not().isEmpty(),
+
+      ValidataInputs,
+   ],
+   createCategory
+);
 
 // ? PUT update - private with token
 router.put("/:id", (req, res) => {
