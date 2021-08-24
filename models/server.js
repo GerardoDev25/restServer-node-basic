@@ -8,8 +8,14 @@ class Server {
       this.app = express();
 
       // * paths
-      this.userPath = "/api/users";
-      this.authPath = "/api/auth";
+      this.paths = {
+         user: "/api/users",
+         auth: "/api/auth",
+         categories: "/api/categories",
+      };
+      // this.userPath = "/api/users";
+      // this.authPath = "/api/auth";
+      // this.categoryPath = "/api/category";
 
       // * connect to data base
       this.connectDB();
@@ -40,12 +46,16 @@ class Server {
    // ? function that handle the routes of the app
    routes() {
       this.app.use(
-         this.userPath,
+         this.paths.user,
          require("../routes/users.routes.js")
       );
       this.app.use(
-         this.authPath,
+         this.paths.auth,
          require("../routes/auth.routes.js")
+      );
+      this.app.use(
+         this.paths.categories,
+         require("../routes/categories.routes.js")
       );
    }
 
