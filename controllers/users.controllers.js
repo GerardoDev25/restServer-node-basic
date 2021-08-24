@@ -3,7 +3,7 @@ const bcryptjs = require("bcryptjs");
 
 const UserModel = require("../models/user");
 
-// ? 0GET
+// ? GET
 const userGet = async (req = request, res = response) => {
    //
    // * get the paramas for the pagination

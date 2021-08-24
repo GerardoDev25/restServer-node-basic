@@ -2,7 +2,12 @@ const { Router } = require("express");
 const { check } = require("express-validator");
 
 // * controllers
-const { createCategory } = require("../controllers/categories");
+const {
+   createCategory,
+   getCategories,
+   deleteCategory,
+   getCategory,
+} = require("../controllers/categories");
 
 // * middleware
 const {
@@ -15,14 +20,10 @@ const {
 const router = Router();
 
 // ? GET all categories - public
-router.get("/", (req, res) => {
-   res.json("get");
-});
+router.get("/", getCategories);
 
 // ? GET one category by id - public
-router.get("/:id", (req, res) => {
-   res.json("get - id");
-});
+router.get("/:id", getCategory);
 
 // ? POST create a category - private with token
 router.post(
@@ -30,7 +31,6 @@ router.post(
    [
       validateJWT,
       check("name", "the name is required").not().isEmpty(),
-
       ValidataInputs,
    ],
    createCategory
@@ -42,8 +42,6 @@ router.put("/:id", (req, res) => {
 });
 
 // ? DELETE delete a category - only admin
-router.delete("/:id", (req, res) => {
-   res.json("delete");
-});
+router.delete("/:id", deleteCategory);
 
 module.exports = router;
