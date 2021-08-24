@@ -1,5 +1,6 @@
 const { request, response } = require("express");
 
+// * models
 const { Category: CategoryModel } = require("../models");
 
 // ? GET all
@@ -69,7 +70,7 @@ const updateCategory = async (req = request, res = response) => {
       });
    }
 
-   
+
    
 };
 
