@@ -7,7 +7,10 @@ const {
    getCategories,
    deleteCategory,
    getCategory,
-} = require("../controllers/categories");
+} = require("../controllers/categories.controllers");
+
+// * helpers
+const { existCategoryId } = require("../helpers/dbValidators");
 
 // * middleware
 const {
@@ -23,7 +26,16 @@ const router = Router();
 router.get("/", getCategories);
 
 // ? GET one category by id - public
-router.get("/:id", getCategory);
+router.get(
+   "/:id",
+   [
+      check("id", "isn't valid id").isMongoId(),
+      // check("id").custom(existCategoryId),
+      ,
+      ValidataInputs,
+   ],
+   getCategory
+);
 
 // ? POST create a category - private with token
 router.post(
