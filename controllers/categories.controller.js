@@ -1,6 +1,6 @@
 const { request, response } = require("express");
 
-const { Category: CategoryModel } = require("../models");
+const { Category: CategoryModel } = require("../models"); 
 
 // ? GET all
 const getCategories = async (req = request, res = response) => {
@@ -62,14 +62,14 @@ const createCategory = async (req = request, res = response) => {
 const updateCategory = async (req = request, res = response) => {
    const { id } = req.params;
 
-   const category = await CategoryModel.findById(id);
-   if (category) {
-      return res.status(400).json({
-         msg: `the category ${category.name} exist!!`,
-      });
-   }
+   // const category = await CategoryModel.findById(id);
+   // if (category) {
+   //    return res.status(400).json({
+   //       msg: `the category ${category.name} exist!!`,
+   //    });
+   // }
 
-   
+res.json('ok')   
    
 };
 
@@ -96,4 +96,5 @@ module.exports = {
    getCategories,
    deleteCategory,
    getCategory,
+   updateCategory
 };

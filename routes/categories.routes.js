@@ -7,15 +7,18 @@ const {
    getCategories,
    deleteCategory,
    getCategory,
-} = require("../controllers/categories.controllers");
+   updateCategory,
+} = require("../controllers/categories.controller");
 
 // * helpers
-// const { existCategoryId } = require("../helpers/dbValidators");
+const { existcategoryId } = require("../helpers/dbValidators");
 
 // * middleware
 const {
    validateJWT,
    ValidataInputs,
+   isAdminRole,
+   haveRole,
 } = require("../middlewares");
 
 // ! ----------------------------------------------------
@@ -29,9 +32,8 @@ router.get("/", getCategories);
 router.get(
    "/:id",
    [
-      // check("id", "isn't valid id").isMongoId(),
-      // check("id").custom(existCategoryId),
-      ,
+      check("id", "the id is requerid").not().isEmpty(),
+      check("id").custom(existcategoryId),
       ValidataInputs,
    ],
    getCategory
@@ -42,6 +44,7 @@ router.post(
    "/",
    [
       validateJWT,
+      haveRole("ADMIN_ROLE", "SELL_ROLE"),
       check("name", "the name is required").not().isEmpty(),
       ValidataInputs,
    ],
@@ -49,11 +52,19 @@ router.post(
 );
 
 // ? PUT update - private with token
-router.put("/:id", (req, res) => {
-   res.json("put - id");
-});
+router.put("/:id", updateCategory);
 
 // ? DELETE delete a category - only admin
-router.delete("/:id", deleteCategory);
+router.delete(
+   "/:id",
+   [
+      check("id", "the id is requerid").not().isEmpty(),
+      check("id").custom(existcategoryId),
+      validateJWT,
+      isAdminRole,
+      ValidataInputs,
+   ],
+   deleteCategory
+);
 
 module.exports = router;

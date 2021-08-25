@@ -27,24 +27,25 @@ const existUserId = async (id) => {
    const exitUser = await UserModel.findById(id);
    if (!exitUser) {
       throw new Error(
-         `this user with id:${id} not exist in the data base`
+         `the user with id:${id} not exist in the data base`
       );
    }
 };
 
-// const existCategoryId = async (id) => {
-//    // * check if exist category
-//    const category = await CategoryModel.findById(id);
-//    if (!category) {
-//       throw new Error(
-//          `there is no a category with the id: ${id}`
-//       );
-//    }
-// };
+// ? valid category id
+const existcategoryId = async (id) => {
+   // * check if exist the email
+   const exitCategory = await CategoryModel.findById(id);
+   if (!exitCategory) {
+      throw new Error(
+         `the category with id:${id} not exist in the data base`
+      );
+   }
+};
 
 module.exports = {
    isValidRole,
    existEmail,
    existUserId,
-   // existCategoryId,
+   existcategoryId,
 };
