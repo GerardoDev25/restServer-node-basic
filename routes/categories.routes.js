@@ -10,7 +10,7 @@ const {
 } = require("../controllers/categories.controllers");
 
 // * helpers
-const { existCategoryId } = require("../helpers/dbValidators");
+// const { existCategoryId } = require("../helpers/dbValidators");
 
 // * middleware
 const {
@@ -29,7 +29,7 @@ router.get("/", getCategories);
 router.get(
    "/:id",
    [
-      check("id", "isn't valid id").isMongoId(),
+      // check("id", "isn't valid id").isMongoId(),
       // check("id").custom(existCategoryId),
       ,
       ValidataInputs,

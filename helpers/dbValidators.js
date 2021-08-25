@@ -32,19 +32,19 @@ const existUserId = async (id) => {
    }
 };
 
-const existCategoryId = async (id) => {
-   // * check if exist category
-   const category = await CategoryModel.findById(id);
-   if (!category) {
-      throw new Error(
-         `there is no a category with the id: ${id}`
-      );
-   }
-};
+// const existCategoryId = async (id) => {
+//    // * check if exist category
+//    const category = await CategoryModel.findById(id);
+//    if (!category) {
+//       throw new Error(
+//          `there is no a category with the id: ${id}`
+//       );
+//    }
+// };
 
 module.exports = {
    isValidRole,
    existEmail,
    existUserId,
-   existCategoryId,
+   // existCategoryId,
 };
