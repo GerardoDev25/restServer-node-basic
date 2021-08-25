@@ -32,7 +32,7 @@ router.get("/", getCategories);
 router.get(
    "/:id",
    [
-      check("id", "the id is requerid").not().isEmpty(),
+      check("id", "the id is requerid").isMongoId(),
       check("id").custom(existcategoryId),
       ValidataInputs,
    ],
