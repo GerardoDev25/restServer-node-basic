@@ -19,7 +19,7 @@ const getCategories = async (req = request, res = response) => {
             .limit(Number(limit)),
       ]);
 
-      res.json({ total, categories });
+      res.status(200).json({ total, categories });
    } catch (error) {
       console.error(error);
       res.status(500).json(
@@ -83,16 +83,26 @@ const createCategory = async (req = request, res = response) => {
 
 // ? PUT
 const updateCategory = async (req = request, res = response) => {
-   const { id } = req.params;
+   try {
+      const { id } = req.params;
 
-   // const category = await CategoryModel.findById(id);
-   // if (category) {
-   //    return res.status(400).json({
-   //       msg: `the category ${category.name} exist!!`,
-   //    });
-   // }
+      const { state, user, ...data } = req.body;
+      data.name = data.name.toUpperCase();
+      data.user = req.userAuth._id;
 
-   res.json("ok");
+      const category = await CategoryModel.findByIdAndUpdate(
+         id,
+         data,
+         { new: true }
+      );
+
+      res.status(200).json({ category });
+   } catch (error) {
+      console.error(error);
+      res.status(500).json(
+         "Error in the database please talk with the admin"
+      );
+   }
 };
 
 // ? DELETE
@@ -102,12 +112,16 @@ const deleteCategory = async (req = request, res = response) => {
 
       // * change the status to false
       const categoryDelete =
-         await CategoryModel.findByIdAndUpdate(id, {
-            state: false,
-         });
+         await CategoryModel.findByIdAndUpdate(
+            id,
+            {
+               state: false,
+            },
+            { new: true }
+         );
 
       // * send category changed
-      res.json({
+      res.status(200).json({
          categoryDelete,
       });
    } catch (error) {

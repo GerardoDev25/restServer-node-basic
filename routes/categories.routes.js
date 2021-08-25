@@ -52,13 +52,24 @@ router.post(
 );
 
 // ? PUT update - private with token
-router.put("/:id", updateCategory);
+router.put(
+   "/:id",
+   [
+      validateJWT,
+      check("id", "the id is requerid").not().isEmpty(),
+      check("id").custom(existcategoryId),
+      check("name", "the name is requerid").not().isEmpty(),
+      haveRole("ADMIN_ROLE", "SELL_ROLE"),
+      ValidataInputs,
+   ],
+   updateCategory
+);
 
 // ? DELETE delete a category - only admin
 router.delete(
    "/:id",
    [
-      check("id", "the id is requerid").not().isEmpty(),
+      check("id", "the id is not valid").isMongoId(),
       check("id").custom(existcategoryId),
       validateJWT,
       isAdminRole,
