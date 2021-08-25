@@ -5,9 +5,9 @@ const isAdminRole = (req = request, res = response, next) => {
    if (!req.userAuth)
       return res
          .status(500)
-         .json(
-            "you want to verify the role without validating the token first"
-         );
+         .json({
+            msg: "you want to verify the role without validating the token first",
+         });
 
    const { role, name } = req.userAuth;
 

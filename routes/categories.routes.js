@@ -7,12 +7,18 @@ const {
    getCategories,
    deleteCategory,
    getCategory,
-} = require("../controllers/categories");
+   updateCategory,
+} = require("../controllers/categories.controller");
+
+// * helpers
+const { existcategoryId } = require("../helpers/dbValidators");
 
 // * middleware
 const {
    validateJWT,
    ValidataInputs,
+   isAdminRole,
+   haveRole,
 } = require("../middlewares");
 
 // ! ----------------------------------------------------
@@ -23,13 +29,22 @@ const router = Router();
 router.get("/", getCategories);
 
 // ? GET one category by id - public
-router.get("/:id", getCategory);
+router.get(
+   "/:id",
+   [
+      check("id", "the id is requerid").not().isEmpty(),
+      check("id").custom(existcategoryId),
+      ValidataInputs,
+   ],
+   getCategory
+);
 
 // ? POST create a category - private with token
 router.post(
    "/",
    [
       validateJWT,
+      haveRole("ADMIN_ROLE", "SELL_ROLE"),
       check("name", "the name is required").not().isEmpty(),
       ValidataInputs,
    ],
@@ -37,11 +52,19 @@ router.post(
 );
 
 // ? PUT update - private with token
-router.put("/:id", (req, res) => {
-   res.json("put - id");
-});
+router.put("/:id",updateCategory);
 
 // ? DELETE delete a category - only admin
-router.delete("/:id", deleteCategory);
+router.delete(
+   "/:id",
+   [
+      check("id", "the id is requerid").not().isEmpty(),
+      check("id").custom(existcategoryId),
+      validateJWT,
+      isAdminRole,
+      ValidataInputs,
+   ],
+   deleteCategory
+);
 
 module.exports = router;
