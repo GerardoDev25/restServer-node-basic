@@ -11,13 +11,25 @@ const {
 
 const collections = ["users", "categories", "products", "roles"];
 
+// ? search user by id
 const searchUsers = async (term, res = response) => {
    const isMondoId = ObjectId.isValid(term);
 
+   // * search by id
    if (isMondoId) {
       const user = await UserModel.findById(term);
-      res.json({ results: user ? [user] : [] });
+      return res.json({ results: user ? [user] : [] });
    }
+
+   // * serach by name or email
+   const regex = new RegExp(term, "i");
+   const users = await UserModel.find({
+      $or: [{ name: regex }, { email: regex }],
+      $and: [{ state: true }],
+   });
+
+   // * send result
+   res.json({ results: users });
 };
 
 // ? Get serach products and categories
