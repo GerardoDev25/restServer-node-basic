@@ -1,10 +1,9 @@
 const { Schema, model } = require("mongoose");
 
-const CategorySchema = Schema({
+const ProductSchema = Schema({
    name: {
       type: String,
       required: [true, "the name is required"],
-      // unique: true,
    },
    state: {
       type: Boolean,
@@ -16,12 +15,28 @@ const CategorySchema = Schema({
       ref: "User",
       required: true,
    },
+   category: {
+      type: Schema.Types.ObjectId,
+      ref: "Categorie",
+      required: true,
+   },
+   price: {
+      type: Number,
+      dafault: 0,
+   },
+   description: {
+      type: String,
+   },
+   available: {
+      type: Boolean,
+      default: true,
+   },
 });
 
 // ? rewrite a functin to remove password and version
-CategorySchema.methods.toJSON = function () {
+ProductSchema.methods.toJSON = function () {
    const { __v, state, _id, ...data } = this.toObject();
    return { uid: _id, ...data };
 };
 
-module.exports = model("Categorie", CategorySchema);
+module.exports = model("Product", ProductSchema);

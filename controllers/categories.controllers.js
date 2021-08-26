@@ -25,8 +25,6 @@ const getCategories = async (req = request, res = response) => {
 const getCategory = async (req = request, res = response) => {
    const { id } = req.params;
 
-   // console.log(req.param);
-
    const category = await CategoryModel.findById(id);
    if (!category) {
       return res.status(404).json({
@@ -69,9 +67,6 @@ const updateCategory = async (req = request, res = response) => {
          msg: `the category ${category.name} exist!!`,
       });
    }
-
-
-   
 };
 
 // ? DELETE
@@ -97,4 +92,5 @@ module.exports = {
    getCategories,
    deleteCategory,
    getCategory,
+   updateCategory,
 };
