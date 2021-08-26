@@ -2,6 +2,7 @@ const Role = require("../models/role");
 const {
    Category: CategoryModel,
    User: UserModel,
+   Product: ProductModel,
 } = require("../models");
 
 // ? valid role
@@ -45,9 +46,21 @@ const existcategoryId = async (id) => {
    }
 };
 
+// ? valid category id
+const existProductId = async (id) => {
+   // * check if exist the email
+   const exitProduct = await ProductModel.findById(id);
+   if (!exitProduct) {
+      throw new Error(
+         `the product with id:${id} not exist in the data base`
+      );
+   }
+};
+
 module.exports = {
    isValidRole,
    existEmail,
    existUserId,
    existcategoryId,
+   existProductId,
 };
