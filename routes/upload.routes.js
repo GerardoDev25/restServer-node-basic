@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { loadFile } = require("../controllers/upload.controller");
 
 // * middleware
 const {
@@ -8,6 +7,7 @@ const {
 } = require("../middlewares/validate-inputs");
 
 // * controllers
+const { loadFile } = require("../controllers/upload.controller");
 
 // ! ----------------------------------------------------
 
