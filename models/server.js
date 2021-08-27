@@ -13,10 +13,8 @@ class Server {
          auth: "/api/auth",
          categories: "/api/categories",
          products: "/api/products",
+         search: "/api/search",
       };
-      // this.userPath = "/api/users";
-      // this.authPath = "/api/auth";
-      // this.categoryPath = "/api/category";
 
       // * connect to data base
       this.connectDB();
@@ -50,17 +48,25 @@ class Server {
          this.paths.user,
          require("../routes/users.routes.js")
       );
+
       this.app.use(
          this.paths.auth,
          require("../routes/auth.routes.js")
       );
+
       this.app.use(
          this.paths.categories,
          require("../routes/categories.routes.js")
       );
+
       this.app.use(
          this.paths.products,
          require("../routes/products.routes.js")
+      );
+
+      this.app.use(
+         this.paths.search,
+         require("../routes/search.routes.js")
       );
    }
 

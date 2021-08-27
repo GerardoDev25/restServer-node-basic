@@ -1,6 +1,14 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 
+// ? middleware
+const {
+   validateJWT,
+   ValidataInputs,
+   haveRole,
+   isAdminRole,
+} = require("../middlewares");
+
 // ? controllers
 const {
    getProducts,
@@ -9,15 +17,9 @@ const {
    updateProduct,
    dateteProduct,
 } = require("../controllers/products.controller");
-const { existProductId } = require("../helpers/dbValidators");
 
-// ? middleware
-const {
-   validateJWT,
-   ValidataInputs,
-   haveRole,
-   isAdminRole,
-} = require("../middlewares");
+// ? helpers
+const { existProductId, existcategoryId } = require("../helpers/dbValidators");
 
 // ! ----------------------------------------------------
 
@@ -40,11 +42,12 @@ router.get(
 
 // ? POST create product - private with token
 router.post(
-   "/:id",
+   "/",
    [
       validateJWT,
       check("name", "the name is required").not().isEmpty(),
-      check("state", "the state is required").not().isEmpty(),
+      check("category", "the category isn't valid").isMongoId(),
+      check("category").custom(existcategoryId),
       haveRole("ADMIN_ROLE", "SELL_ROLE"),
       ValidataInputs,
    ],
@@ -58,7 +61,6 @@ router.put(
       validateJWT,
       check("id", "the id is not valid").isMongoId(),
       check("id").custom(existProductId),
-      check("name", "the name is requerid").not().isEmpty(),
       haveRole("ADMIN_ROLE", "SELL_ROLE"),
       ValidataInputs,
    ],

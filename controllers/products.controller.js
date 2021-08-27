@@ -60,7 +60,7 @@ const getProduct = async (req = request, res = response) => {
 // ? POST create product - private with token
 const createProduct = async (req = request, res = response) => {
    try {
-      const { ...data } = req.body;
+      const { state, user, ...data } = req.body;
       const name = req.body.name.toUpperCase();
 
       // * verify if the product exits
@@ -81,6 +81,8 @@ const createProduct = async (req = request, res = response) => {
       const newProduct = new ProductsModel(newData);
       await newProduct.save();
       res.status(201).json(newProduct);
+
+      //
    } catch (error) {
       console.error(error);
       res.status(500).json(
@@ -95,7 +97,11 @@ const updateProduct = async (req = request, res = response) => {
       // * get params and data
       const { id } = req.params;
       const { state, user, ...data } = req.body;
-      data.name = data.name.toUpperCase();
+
+      if (data.name) {
+         data.name = data.name.toUpperCase();
+      }
+
       data.user = req.userAuth._id;
 
       // * finad and update the product
@@ -107,6 +113,8 @@ const updateProduct = async (req = request, res = response) => {
 
       // * send the prouduct
       res.status(200).json({ product });
+
+      //
    } catch (error) {
       console.error(error);
       res.status(500).json(
@@ -130,6 +138,8 @@ const dateteProduct = async (req = request, res = response) => {
 
       // *send the product
       res.status(200).json({ product });
+
+      //
    } catch (error) {
       console.error(error);
       res.status(500).json(
