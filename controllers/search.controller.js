@@ -1,6 +1,7 @@
 const { response, request } = require("express");
 const { ObjectId } = require("mongoose").Types;
 
+// ? models
 const {
    User: UserModel,
    Category: CategoryModel,
@@ -9,6 +10,7 @@ const {
 
 // ! ----------------------------------------------------
 
+// ? collections for search
 const collections = ["users", "categories", "products", "roles"];
 
 // ? search user
@@ -117,6 +119,7 @@ const search = (req = request, res = response) => {
          searchProducts(term, res);
          break;
 
+      // * if the term isn't match 
       default:
          res.status(500).json({
             msg: "I forgot to do this search",
