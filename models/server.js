@@ -14,9 +14,10 @@ class Server {
          categories: "/api/categories",
          products: "/api/products",
          search: "/api/search",
+         uploads: "/api/uploads",
       };
 
-      // * connect to data base
+      // * connect to database
       this.connectDB();
 
       // * middlewares
@@ -67,6 +68,11 @@ class Server {
       this.app.use(
          this.paths.search,
          require("../routes/search.routes.js")
+      );
+
+      this.app.use(
+         this.paths.uploads,
+         require("../routes/upload.routes.js")
       );
    }
 
