@@ -30,4 +30,11 @@ const loadFile = async (req = request, res = response) => {
    }
 };
 
-module.exports = { loadFile };
+// ? PUt update image
+const updateImage = async (req = request, res = response) => {
+   const { collection, id } = req.params;
+
+   res.json({ collection, id });
+};
+
+module.exports = { loadFile, updateImage };
