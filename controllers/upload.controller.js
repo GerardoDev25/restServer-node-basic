@@ -1,3 +1,5 @@
+const path = require("path");
+const fs = require("fs");
 const { request, response } = require("express");
 
 const { uploadFile } = require("../helpers");
@@ -33,7 +35,6 @@ const updateImage = async (req = request, res = response) => {
    const { collection, id } = req.params;
 
    let model;
-
    switch (collection) {
       case "users":
          model = await UserModel.findById(id);
@@ -58,15 +59,28 @@ const updateImage = async (req = request, res = response) => {
          });
    }
 
+   // * clear img prev
+   if (model.image) {
+      // * delete img
+      const pathImage = path.join(
+         __dirname,
+         "../uploads",
+         collection,
+         model.image
+      );
+      if (fs.existsSync(pathImage)) fs.unlinkSync(pathImage);
+   }
+
+   // * get name of the image
    const name = await uploadFile(
       req.files,
       undefined,
       collection
    );
-
    model.image = name;
-   await model.save();
 
+   // *save and send the image name
+   await model.save();
    res.json({ collection, id, name });
 };
 
