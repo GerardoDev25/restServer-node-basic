@@ -88,8 +88,8 @@ const updateImage = async (req = request, res = response) => {
 const showImage = async (req = request, res = response) => {
    const { collection, id } = req.params;
 
+   // * GET model
    let model;
-
    switch (collection) {
       case "users":
          model = await UserModel.findById(id);
