@@ -15,9 +15,19 @@ const loadFile = async (req = request, res = response) => {
          .status(400)
          .json({ msg: "No files were uploaded." });
 
-   const name = await uploadFile(req.files);
+   try {
+      //   const name = await uploadFile(req.files, ["txt", "md"], 'texts');
+      const name = await uploadFile(
+         req.files,
+         undefined,
+         "imgs"
+      );
+      res.status(200).json({ name });
 
-   res.json({ name });
+      //
+   } catch (msg) {
+      res.status(400).json({ msg });
+   }
 };
 
 module.exports = { loadFile };
