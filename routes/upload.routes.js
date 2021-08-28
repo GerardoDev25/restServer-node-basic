@@ -4,7 +4,8 @@ const { check } = require("express-validator");
 // * middleware
 const {
    ValidataInputs,
-} = require("../middlewares/validate-inputs");
+   validateFileUpload,
+} = require("../middlewares");
 
 // * controllers
 const {
@@ -20,7 +21,7 @@ const { allowCollections } = require("../helpers");
 const router = Router();
 
 // ? GET load files
-router.post("/", loadFile);
+router.post("/", validateFileUpload, loadFile);
 
 // ? GET load files
 router.put(
@@ -30,6 +31,7 @@ router.put(
       check("collection").custom((c) =>
          allowCollections(c, ["users", "products"])
       ),
+      validateFileUpload,
       ValidataInputs,
    ],
    updateImage

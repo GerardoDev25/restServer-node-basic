@@ -11,16 +11,6 @@ const {
 const loadFile = async (req = request, res = response) => {
    //
 
-   // * if come a file property in the request
-   if (
-      !req.files ||
-      Object.keys(req.files).length === 0 ||
-      !req.files.file
-   )
-      return res
-         .status(400)
-         .json({ msg: "No files were uploaded." });
-
    try {
       //   const name = await uploadFile(req.files, ["txt", "md"], 'texts');
       const name = await uploadFile(
@@ -38,6 +28,8 @@ const loadFile = async (req = request, res = response) => {
 
 // ? PUt update image
 const updateImage = async (req = request, res = response) => {
+   //
+
    const { collection, id } = req.params;
 
    let model;
