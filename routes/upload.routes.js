@@ -9,6 +9,7 @@ const {
 
 // * controllers
 const {
+   showImage,
    loadFile,
    updateImage,
 } = require("../controllers/upload.controller");
@@ -19,6 +20,19 @@ const { allowCollections } = require("../helpers");
 // ! ----------------------------------------------------
 
 const router = Router();
+
+// ? GET show image
+router.get(
+   "/:collection/:id",
+   [
+      check("id", "id invalid").isMongoId(),
+      check("collection").custom((c) =>
+         allowCollections(c, ["users", "products"])
+      ),
+      ValidataInputs,
+   ],
+   showImage
+);
 
 // ? GET load files
 router.post("/", validateFileUpload, loadFile);
@@ -31,8 +45,8 @@ router.put(
       check("collection").custom((c) =>
          allowCollections(c, ["users", "products"])
       ),
-      validateFileUpload,
       ValidataInputs,
+      validateFileUpload
    ],
    updateImage
 );
