@@ -99,6 +99,7 @@ const showImage = async (req = request, res = response) => {
             });
 
          break;
+
       case "products":
          model = await ProductModel.findById(id);
          if (!model)
@@ -127,7 +128,12 @@ const showImage = async (req = request, res = response) => {
          return res.sendFile(pathImage);
    }
 
-   res.json({ msg: "plase holder missing" });
+   const noImagePath = path.join(
+      __dirname,
+      "../assets",
+      "no-image.jpg.jpg"
+   );
+   res.sendFile(noImagePath);
 };
 
 module.exports = { showImage, loadFile, updateImage };
